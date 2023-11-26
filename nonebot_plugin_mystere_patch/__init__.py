@@ -17,6 +17,7 @@ async def v11_send(
         **params: Any,
 ) -> Any:
     event_dict = event.dict()
+    event.id = event_dict["id"]
     # 如果不是主动消息，则添加 origin_event 字段
     if not proactive:
         sub_type = ""
@@ -43,10 +44,6 @@ async def v11_send(
     await origin_v11_send(self, event, message, **params)
 
 
-def v11_event_id(self: EventV11) -> str:
-    return self.dict()["id"]
-
-
 async def v12_send(
         self: BotV12,
         event: EventV12,
@@ -67,6 +64,4 @@ async def v12_send(
 
 
 BotV11.send = v11_send
-EventV11.get_id = v11_event_id
-
 BotV12.send = v12_send
