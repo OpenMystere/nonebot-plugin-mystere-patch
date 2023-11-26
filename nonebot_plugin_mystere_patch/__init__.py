@@ -38,7 +38,7 @@ async def v11_send(
             raise ValueError("Unknown type of event: " + event_dict["type"])
         params["origin_event"] = {
             "id": event_dict["id"],
-            "type": event_dict["type"],
+            "type": origin_type,
             "detail_type": detail_type,
             "sub_type": sub_type,
         }
