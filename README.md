@@ -2,7 +2,7 @@
 
 此插件提供针对 Mystere 的补丁支持，适用于 NoneBot2，开发者无需对现有代码进行任何修改。
 
-理论兼容 [mnixry/nonebot-plugin-guild-patch](https://github.com/mnixry/nonebot-plugin-guild-patch)。
+插件包含 [mnixry/nonebot-plugin-guild-patch](https://github.com/mnixry/nonebot-plugin-guild-patch)。
 
 ## 补丁内容
 
