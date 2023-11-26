@@ -2,9 +2,9 @@ from typing import Union, Any
 
 from nonebot_plugin_guild_patch import Bot as BotV11, Event as EventV11, Message as MessageV11, \
     MessageSegment as MessageSegmentV11
-from nonebot_plugin_guild_patch import Bot as BotV12, Event as EventV12, Message as MessageV12, \
+from nonebot.adapters.onebot.v12 import Bot as BotV12, Event as EventV12, Message as MessageV12, \
     MessageSegment as MessageSegmentV12
-from nonebot_plugin_guild_patch import logger
+from nonebot import logger
 
 origin_v11_send = BotV11.send
 origin_v12_send = BotV12.send
