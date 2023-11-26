@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-mystere-patch"
-version = "1.0.0-alpha01"
+version = "1.0.0-alpha03"
 description = "Patch plugin for NoneBot2 mystere support."
 packages = [{ include = 'nonebot_plugin_mystere_patch' }]
 authors = ["Madray Haven <sgpublic2002@gmail.com>"]
@@ -10,8 +10,7 @@ repository = "https://github.com/OpenMystere/nonebot-plugin-mystere-patch"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-nonebot2 = "^2.0.0"
-nonebot-adapter-onebot = "^2.1.0"
+nonebot-plugin-guild-patch = "^0.2.3"
 
 
 [build-system]

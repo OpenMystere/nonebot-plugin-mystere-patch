@@ -1,9 +1,10 @@
 from typing import Union, Any
 
-from nonebot.adapters.onebot.v11 import Bot as BotV11, Event as EventV11, Message as MessageV11, \
+from nonebot_plugin_guild_patch import Bot as BotV11, Event as EventV11, Message as MessageV11, \
     MessageSegment as MessageSegmentV11
-from nonebot.adapters.onebot.v12 import Bot as BotV12, Event as EventV12, Message as MessageV12, \
+from nonebot_plugin_guild_patch import Bot as BotV12, Event as EventV12, Message as MessageV12, \
     MessageSegment as MessageSegmentV12
+from nonebot_plugin_guild_patch import logger
 
 origin_v11_send = BotV11.send
 origin_v12_send = BotV12.send
@@ -16,28 +17,31 @@ async def v11_send(
         **params: Any,
 ) -> Any:
     event_dict = event.dict()
-    event.id = event_dict["id"]
-    sub_type = ""
-    if "sub_type" in event_dict:
-        sub_type = event_dict["sub_type"]
-
-    origin_type = event_dict["type"]
-    if origin_type == "meta":
-        detail_type = event_dict["meta_event_type"]
-    elif origin_type == "message":
-        detail_type = event_dict["message_type"]
-    elif origin_type == "notice":
-        detail_type = event_dict["notice_type"]
-    elif origin_type == "request":
-        detail_type = event_dict["request_type"]
+    if "id" not in event_dict:
+        logger.warning("事件 ID 字段不存在，事件可能由非 Mystere 分发，放弃适配。")
     else:
-        raise ValueError("Unknown type of event: " + event_dict["type"])
-    params["origin_event"] = {
-        "id": event_dict["id"],
-        "type": event_dict["type"],
-        "detail_type": detail_type,
-        "sub_type": sub_type,
-    }
+        event.id = event_dict["id"]
+        sub_type = ""
+        if "sub_type" in event_dict:
+            sub_type = event_dict["sub_type"]
+
+        origin_type = event_dict["post_type"]
+        if origin_type == "meta":
+            detail_type = event_dict["meta_event_type"]
+        elif origin_type == "message":
+            detail_type = event_dict["message_type"]
+        elif origin_type == "notice":
+            detail_type = event_dict["notice_type"]
+        elif origin_type == "request":
+            detail_type = event_dict["request_type"]
+        else:
+            raise ValueError("Unknown type of event: " + event_dict["type"])
+        params["origin_event"] = {
+            "id": event_dict["id"],
+            "type": event_dict["type"],
+            "detail_type": detail_type,
+            "sub_type": sub_type,
+        }
     await origin_v11_send(self, event, message, **params)
 
 
