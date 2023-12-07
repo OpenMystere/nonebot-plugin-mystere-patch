@@ -42,7 +42,7 @@ async def v11_send(
             "detail_type": detail_type,
             "sub_type": sub_type,
         }
-    await origin_v11_send(self, event, message, **params)
+    return await origin_v11_send(self, event, message, **params)
 
 
 async def v12_send(
@@ -58,7 +58,7 @@ async def v12_send(
         "detail_type": event_dict["detail_type"],
         "sub_type": event_dict["sub_type"],
     }
-    await origin_v12_send(self, event, message, **params)
+    return await origin_v12_send(self, event, message, **params)
 
 
 BotV11.send = v11_send
